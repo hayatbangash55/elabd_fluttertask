@@ -4,7 +4,8 @@ class CustomTextBtn extends StatelessWidget {
   final VoidCallback? onPressed;
   final Color? backgroundColor;
   final Color? foregroundColor;
-  final Size? minimumSize;
+  final double width;
+  final double height;
   final Widget child;
   final double? radius;
   final EdgeInsetsGeometry? padding;
@@ -14,7 +15,8 @@ class CustomTextBtn extends StatelessWidget {
 
   const CustomTextBtn({
     Key? key,
-    this.minimumSize,
+    this.height = 45,
+    this.width = double.infinity,
     this.onPressed,
     this.backgroundColor,
     this.foregroundColor,
@@ -35,13 +37,13 @@ class CustomTextBtn extends StatelessWidget {
         tapTargetSize: tapTargetSize,
         backgroundColor: backgroundColor,
         foregroundColor: foregroundColor,
-        minimumSize: minimumSize,
+        minimumSize: Size(width, height),
         side: side,
         shape: (radius == null)
             ? shape
             : RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(radius!),
-        ),
+                borderRadius: BorderRadius.circular(radius!),
+              ),
       ),
       child: child,
     );

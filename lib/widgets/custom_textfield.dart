@@ -15,31 +15,39 @@ class CustomTextField1 extends StatelessWidget {
   final FormFieldValidator<String>? validator;
   final void Function()? onTap;
 
-  const CustomTextField1({
-    Key? key,
-    this.onTap,
-    this.showCursor,
-    this.readOnly = false,
-    this.fillColor,
-    this.contentPadding = const EdgeInsets.fromLTRB(10, 13.5, 10, 13.5),
-    this.controller,
-    this.suffixIcon,
-    this.obscureText = false,
-    this.hintText,
-    this.prefixIcon,
-    this.title,
-    this.validator
-  }) : super(key: key);
+  const CustomTextField1(
+      {Key? key,
+      this.onTap,
+      this.showCursor,
+      this.readOnly = false,
+      this.fillColor,
+      this.contentPadding = const EdgeInsets.fromLTRB(10, 13.5, 10, 13.5),
+      this.controller,
+      this.suffixIcon,
+      this.obscureText = false,
+      this.hintText,
+      this.prefixIcon,
+      this.title,
+      this.validator})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title ?? "",
-          style: const TextStyle(color: Color(0xff858597), fontSize: 12),
-        ),
+        title != null
+            ? Padding(
+                padding: const EdgeInsets.only(bottom: 5),
+                child: Text(
+                  title ?? "",
+                  style: const TextStyle(
+                    color: Color(0xff858597),
+                    fontSize: 15,
+                  ),
+                ),
+              )
+            : const SizedBox(height: 0),
         TextFormField(
           autovalidateMode: AutovalidateMode.onUserInteraction,
           onTap: onTap,
@@ -49,19 +57,19 @@ class CustomTextField1 extends StatelessWidget {
           controller: controller,
           obscureText: obscureText,
           decoration: InputDecoration(
-            hintStyle: TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
+            hintStyle:
+                const TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
             prefixIcon: prefixIcon,
             contentPadding: contentPadding,
             suffixIcon: suffixIcon,
-            // suffixIconConstraints: BoxConstraints.expand(width: 40),
             filled: true,
             fillColor: Colors.white,
             hintText: hintText,
-            errorStyle: TextStyle(
+            errorStyle: const TextStyle(
               color: Colors.red,
             ),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xffB8B8D2)),
+              borderSide: const BorderSide(color: Color(0xffB8B8D2)),
               borderRadius: BorderRadius.circular(6),
             ),
             focusedBorder: OutlineInputBorder(

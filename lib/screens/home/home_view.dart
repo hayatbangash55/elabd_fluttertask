@@ -31,7 +31,6 @@ class HomeView extends StatelessWidget {
                 ),
                 addBtn(),
                 const SizedBox(height: 10),
-                const Divider(),
                 listView()
               ],
             ),
@@ -69,27 +68,38 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  addBtn() {
-    return CustomTextBtn(
-      backgroundColor: Colors.blue,
-      child: const Text(
-        'Add',
-        style: TextStyle(color: Colors.white),
+  Widget addBtn() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 15, bottom: 10),
+      child: CustomTextBtn(
+        backgroundColor: Colors.blue,
+        child: const Text(
+          'Add',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        onPressed: () {
+          viewModel.addData();
+        },
       ),
-      onPressed: () {
-        viewModel.addData();
-      },
     );
   }
 
   Widget listView() {
     return Obx(
       () => Expanded(
-        child: ListView.builder(
-          shrinkWrap: true,
+        child: ListView.separated(
+          reverse: true,
+          physics: const BouncingScrollPhysics(),
           itemCount: viewModel.dataList.length,
           itemBuilder: (BuildContext context, int index) {
             return listViewItem(index);
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return const Divider(height: 20);
           },
         ),
       ),
@@ -97,12 +107,44 @@ class HomeView extends StatelessWidget {
   }
 
   Widget listViewItem(int index) {
-    return Column(
-      children: [
-        Text(viewModel.dataList[index].name ?? 'skafnasf',style: TextStyle(color: Colors.blue),),
-        Text(viewModel.dataList[index].phone ?? 'sajdasfuj'),
-        const SizedBox(height: 10),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Row(
+        children: [
+          listViewLayout(
+            title: 'Name',
+            value: viewModel.dataList[index].name ?? 'N/A',
+          ),
+          const SizedBox(width: 10),
+          listViewLayout(
+            title: 'Phone Number',
+            value: viewModel.dataList[index].phone ?? 'N/A',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget listViewLayout({required String title, required String value}) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            value,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
     );
   }
 }
